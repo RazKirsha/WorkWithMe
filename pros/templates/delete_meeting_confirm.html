@@ -1,0 +1,39 @@
+{% extends 'partials/base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+ <link rel="stylesheet" href="{% static 'main/css/registeration.css' %}" media="screen">
+{% endblock %}
+
+
+{% block content %}
+<div class="all">
+    <div>
+        <h1 style="color:transparent;">Delete Meeting?</h1>
+    </div>
+    <div class="form_wrapper" style="padding-bottom:150px;">
+      <div class="form_container">
+        <div class="title_container">
+          <h2>Delete Meeting?</h2>
+        </div>
+        <div class="row clearfix">
+          <div class="form">
+            <form method="POST">
+                {% csrf_token %}
+                    <fieldset class="form-group">
+                     <h4>Are you sure you want to delete this meeting?</h4>
+                    </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-danger button-2" type="submit">Yes, Delete</button>
+                    <a class="btn btn-secondary button-2" href="{% url 'homepage' %}">Cancel</a>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endblock %}
+

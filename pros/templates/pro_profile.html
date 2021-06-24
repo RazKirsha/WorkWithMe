@@ -1,0 +1,83 @@
+{% extends 'partials/base.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'main/css/nicepage.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'pros/css/Pro2.css' %}" media="screen">
+    <script class="u-script" type="text/javascript" src="{% static 'main/js/jquery.js' %}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{% static 'main/js/nicepage.js' %}" defer=""></script>
+    <meta name="generator" content="Nicepage 3.17.2, nicepage.com">
+
+    <script type="application/ld+json">{
+            "@context": "http://schema.org",
+            "@type": "Organization",
+            "name": ""
+    }</script>
+        <meta property="og:title" content="Pro">
+        <meta property="og:type" content="website">
+        <meta name="theme-color" content="#478ac9">
+{% endblock %}
+
+{% block content %}
+
+    <section class="u-align-center u-clearfix u-grey-10 u-section-1" id="carousel_0697">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-text u-text-palette-1-base u-text-1">Your Opportunities</h2>
+        <p class="u-text u-text-grey-50 u-text-2">Check on your jobs offers</p>
+        <div class="u-list u-list-1" id="blocks">
+            <div class="row">
+            {% for offer in offers.object_list %}
+                <div class="u-grey-5 block">
+                  <div class="u-container-layout u-similar-container u-container-layout-1 ">
+                    <div class="upper">
+                        <h3 class="u-align-center u-text u-text-palette-1-base u-text-3">{{offer.title}}</h3>
+                        <h4 class="u-text u-text-4">Made by: {{offer.offer_maker}}</h4>
+                        <h4 class="u-text u-text-5">Deadline: {{offer.date_deadline}}</h4>
+                        <p class="u-align-center u-text u-text-grey-50 u-text-6">{{offer.content}}</p>
+                          <div class="info">
+                            <h4 class="u-text u-text-8">Duration: {{offer.duration}} minutes</h4>
+                          </div>
+                            <a class="btn btn-primary accept" href="{% url 'accept_offer' offer.id %}">Accept</a>
+                        <hr>
+                          <div class="skills">
+                              {% for i in offer.field.all %}
+                                <a class="u-border-0 u-btn u-btn-round u-button-style u-hover-palette-5-base u-palette-5-base u-radius-50 u-btn-1">{{i}}</a>
+                              {% endfor %}
+                          </div>
+                    </div>
+                  </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+          <div class="pagination">
+            {% if offers.has_previous %}
+                <a href="{% url 'pro_profile' %}?page={{offers.previous_page_number}}" class="u-btn u-btn-round u-button-style u-hover-palette-1-dark-1 u-radius-9">PREV</a>
+            {% endif %}
+            <h5 class="pag">Page number: {{offers.number}}</h5>
+            {% if offers.has_next %}
+                <a href="{% url 'pro_profile' %}?page={{offers.next_page_number}}" class="u-btn u-btn-round u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-radius-9">NEXT</a>
+            {% endif %}
+          </div>
+      </div>
+    </section>
+
+
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-b7df"><div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1">Sample text. Click to select the text box. Click again or double click to start editing the text.</p>
+      </div></footer>
+    <section class="u-backlink u-clearfix u-grey-80">
+      <a class="u-link" href="https://nicepage.com/website-mockup" target="_blank">
+        <span>Website Mockup</span>
+      </a>
+      <p class="u-text">
+        <span>created with</span>
+      </p>
+      <a class="u-link" href="https://nicepage.com/" target="_blank">
+        <span>Website Builder Software</span>
+      </a>.
+    </section>
+
+{% endblock %}

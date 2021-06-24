@@ -1,0 +1,10 @@
+.notification {
+    height: 3%;
+    display: flex;
+    justify-content: space-between;
+    vertical-align: middle;
+    align-items: center;
+}
+
+.a-button{
+}

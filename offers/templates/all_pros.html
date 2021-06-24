@@ -1,0 +1,36 @@
+{% extends 'partials/base.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+    <meta name="keywords" content="Need a Little Help?, Welcome to the right place!, Get any help you need, Our Service's Adventages, About Us, Let's work together, Contact us, Follow us, INTUITIVE">
+    <link rel="stylesheet" href="{% static 'main/css/nicepage.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'main/css/Home.css' %}" media="screen">
+    <script class="u-script" type="text/javascript" src="{% static 'main/js/jquery.js' %}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{% static 'main/js/nicepage.js' %}" defer=""></script>
+    <meta name="generator" content="Nicepage 3.17.2, nicepage.com">
+{% endblock %}
+
+{% block content %}
+
+  <section class="u-align-center u-clearfix u-image u-shading u-section-2" src="" id="carousel_53e7">
+    <div class="u-clearfix u-sheet u-valign-middle u-sheet-1 add1">
+      <h1 class="u-text u-text-1">Get any help you need</h1>
+      <p class="u-text u-text-2">Ask the best people in buisness for any kind of help, and you'll get the help you needed!</p>
+      <div class="u-expanded-width u-list u-list-1">
+        <div class="u-repeater u-repeater-1">
+          {% for pro in data %}
+            <div class="u-align-center u-container-style u-list-item u-repeater-item u-video-cover u-white">
+              <div class="u-container-layout u-similar-container u-container-layout-2">
+                <h4 class="u-text u-text-4">{{pro}}</h4>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+        <h3 class="u-text u-text-3">And Many More..</h3>
+    </div>
+  </section>
+
+{% endblock %}

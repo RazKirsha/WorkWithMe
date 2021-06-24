@@ -1,0 +1,44 @@
+{% extends 'partials/base.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'pros/css/video_chat.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="meet-design">
+        <div id="meet"></div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src='https://meet.jit.si/external_api.js'></script>
+
+    <script>
+        const domain = 'meet.jit.si';
+        const options = {
+        roomName: '{{meeting.code}}',
+        width: 600,
+        height: 500,
+        parentNode: document.querySelector('#meet'),
+        interfaceConfigOverwrite: {
+              MOBILE_APP_PROMO: false,
+              SHOW_JITSI_WATERMARK: false,
+              SHOW_CHROME_EXTENSION_BANNER: false,
+          }
+        };
+        const api = new JitsiMeetExternalAPI(domain, options);
+        api.executeCommand('displayName', "{{user.username|safe}}");
+        api.on('videoConferenceLeft', (params) => {
+            {% if meeting.pro != request.user.profile %}
+                window.location.replace("{% url 'create_feedback' meeting.pro.id %}");
+            {% else %}
+                window.location.replace("{% url 'homepage' %}");
+            {% endif %}
+        });
+
+    </script>
+
+{% endblock %}

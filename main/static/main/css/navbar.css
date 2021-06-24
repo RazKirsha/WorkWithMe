@@ -1,0 +1,16 @@
+.aa{
+    display: flex;
+}
+
+.details {
+    display: flex;
+}
+
+.link1 {
+    display: flex;
+    margin-bottom: 3px;
+}
+
+.buttons {
+    margin-top: 5px;
+}

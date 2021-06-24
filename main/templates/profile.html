@@ -1,0 +1,197 @@
+{% extends 'partials/base.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="FN + LN">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{% static 'main/css/nicepage.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'main/css/Profile.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'main/css/pro_pending_offers.css' %}" media="screen">
+    <script class="u-script" type="text/javascript" src="{% static 'main/js/jquery.js' %}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{% static 'main/js/nicepage.js' %}" defer=""></script>
+    <meta name="generator" content="Nicepage 3.17.5, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="{% static 'main/fonts/icomoon/style.css' %}">
+
+    <link href='{% static "main/fullcalendar/packages/core/main.css" %}' rel='stylesheet' />
+    <link href='{% static "main/fullcalendar/packages/daygrid/main.css" %}' rel='stylesheet' />
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'main/css/bootstrap.min.css' %}">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+
+
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": ""
+    }</script>
+    <meta property="og:title" content="Profile">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+{% endblock %}
+
+{% block content %}
+
+    <section class="u-align-center u-clearfix u-grey-5 u-section-1" id="carousel_f7ee">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h1 class="u-text u-text-1">{{profile.user.first_name}} {{profile.user.last_name}}</h1>
+        <p class="u-large-text u-text u-text-variant u-text-2">@{{profile.user.username}}</p>
+        <div class="u-clearfix u-layout-wrap u-layout-wrap-1">
+          <div class="u-gutter-0 u-layout">
+            <div class="u-layout-col">
+              <div class="u-align-center u-container-style u-layout-cell u-size-20 u-layout-cell-1">
+                <div class="u-container-layout u-valign-middle-lg u-valign-middle-xl u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-1">
+                  <img class="an-image" src="{{profile.picture.url}}" style="border-radius:50%; display: block; margin-left: auto; margin-right: auto; width: 50%;">
+                </div>
+              </div>
+              <div class="u-align-center u-container-style u-layout-cell u-size-20 u-white u-layout-cell-2">
+                <div class="u-container-layout u-valign-middle u-container-layout-2">
+                  <h4 class="u-text u-text-3">About me</h4>
+                  <p class="u-text u-text-4">{{profile.about}}</p>
+                </div>
+              </div>
+                {% if profile.is_pro %}
+                  <div class="u-align-center u-container-style u-layout-cell u-size-20 u-layout-cell-3">
+                    <div class="u-container-layout u-container-layout-3">
+                      <h4 class="u-text u-text-5">Details</h4>
+                      <p class="u-text u-text-6">Fields:<br>
+                      </p>
+                        <div class="my_skills" style="display: flex; justify-content: center; flex-wrap: wrap;">
+                            {% for i in profile.skills.all %}
+                            <p class="u-text u-text-9" style="border-bottom: 1px grey solid; border-right: 1px grey solid; margin: 6px; padding-right: 4px;"><strong>{{i}}</strong></p>
+                            {% endfor %}
+                        </div>
+                          <span class="u-text-black"></span>
+                      <p class="u-text u-text-8">Rating:<br></p>
+                        {% if profile.reviews_num > 5 %}
+                            <p class="u-text u-text-9"><strong>{{profile.rating}}</strong></p>
+                        {% else %}
+                            <p>Not enough reviews yet!</p>
+                        {% endif %}
+                    </div>
+                  </div>
+                {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% if profile == request.user.profile %}
+        <section class="u-align-center u-clearfix u-section-2" id="sec-109e">
+          <div class="u-clearfix u-sheet u-sheet-1">
+            <h2 class="u-text u-text-1">My Pending Offers</h2>
+            <p class="u-text u-text-2">My pending offers - My unanswered offers to the community.</p>
+            <div class="u-clearfix u-expanded-width u-gutter-50 u-layout-wrap u-layout-wrap-1">
+              <div class="u-layout">
+                <div class="u-layout-row">
+                    {% for i in page.object_list %}
+                      <div class="u-align-center u-container-style u-layout-cell u-left-cell u-size-20 u-layout-cell-1">
+                        <div class="u-border-2 u-border-grey-25 u-container-layout u-container-layout-1">
+                          <h2 class="u-text u-text-3">{{i.title}}</h2>
+                          <h5 class="u-text u-text-4">deadline: {{i.date_deadline}}</h5>
+                          <p class="u-text u-text-5">{{i.content}}</p>
+                          <p class="u-text u-text-6">duration: {{i.duration}}</p>
+                            <div class="skills">
+                              {% for j in offer.field.all %}
+                                <a class="u-border-0 u-btn u-btn-round u-button-style u-hover-palette-5-base u-palette-5-base u-radius-50 u-btn-1">{{j}}</a>
+                              {% endfor %}
+                            </div>
+                        </div>
+                      </div>
+                    {% empty %}
+                        <div style="text-align:center;">
+                            <h3>No Pending Offers..</h3>
+                        </div>
+                    {% endfor %}
+                </div>
+              </div>
+            </div>
+            <div class="pagination">
+            {% if page.has_previous %}
+                <a href="{% url 'profile' profile.id %}?page={{page.previous_page_number}}" class="u-btn u-btn-round u-button-style u-hover-palette-1-dark-1 u-radius-9">PREV</a>
+            {% endif %}
+            <h5 class="pag">Page number: {{page.number}}</h5>
+            {% if page.has_next %}
+                <a href="{% url 'profile' profile.id %}?page={{page.next_page_number}}" class="u-btn u-btn-round u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-radius-9">NEXT</a>
+            {% endif %}
+          </div>
+          </div>
+        </section>
+        <hr>
+        <section>
+            <div style="position:static; height: 800px;" id='calendar-container'>
+                <h2 style="text-align:center;"><strong>Calendar</strong></h2>
+                <div id='calendar' style="margin-bottom: 100px;"></div>
+            </div>
+
+            <script src="{% static 'main/js/jquery-3.3.1.min.js' %}"></script>
+            <script src="{% static 'main/js/popper.min.js' %}"></script>
+            <script src="{% static 'main/js/bootstrap.min.js' %}"></script>
+
+            <script src='{% static "main/fullcalendar/packages/core/main.js" %}'></script>
+            <script src='{% static "main/fullcalendar/packages/interaction/main.js" %}'></script>
+            <script src='{% static "main/fullcalendar/packages/daygrid/main.js" %}'></script>
+            <script src='{% static "main/fullcalendar/packages/timegrid/main.js" %}'></script>
+            <script src='{% static "main/fullcalendar/packages/list/main.js" %}'></script>
+
+            <script>
+              document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+              plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+              height: 'parent',
+              header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+              },
+              defaultView: 'dayGridMonth',
+              defaultDate: '2021-06-22',
+              navLinks: true, // can click day/week names to navigate views
+              editable: true,
+              eventLimit: true, // allow "more" link when too many events
+              events: [
+                    {% for i in meetings_as_pro %}
+                        {
+                          title: '{{i.offer.title}}',
+                          start: '{{i.reformat_time}}',
+                          url: "http://127.0.0.1:8000/video_chat/{{i.id}}/"
+                        },
+                    {% endfor %}
+                    {% for i in meetings_as_user %}
+                        {
+                          title: '{{i.offer.title}}',
+                          start: '{{i.reformat_time}}',
+                          url: "http://127.0.0.1:8000/video_chat/{{i.id}}/"
+                        },
+                    {% endfor %}
+              ]
+            });
+
+            calendar.render();
+          });
+
+        </script>
+
+        <script src="{% static 'main/js/main.js' %}"></script>
+    </section>
+    {% endif %}
+
+{% endblock %}

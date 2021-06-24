@@ -1,0 +1,69 @@
+{% load static %}
+{% block css2 %}
+<link rel="stylesheet" href="{% static 'main/css/navbar.css'%}">
+{% endblock %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light aa">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="stuff">
+        <ul class="navbar-nav me-auto mb-0 mb-lg-0">
+          <a class="navbar-brand" href="{% url 'homepage' %}">Home</a>
+          {% if user.is_authenticated %}
+             <li class="nav-item">
+               <a data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" class="nav-link" aria-current="page">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                    <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+                  </svg>
+                </a>
+             </li>
+            <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'make_offer' %}">Make Offer</a></li>
+            {% if user.profile.is_pro %}
+              <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'pro_profile' %}">Take an offer</a></li>
+            {% endif %}
+            {% if user.is_superuser %}
+            {% else %}
+            {% endif %}
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'profile' user.profile.id %}">My Profile</a></li>
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'logout' %}">Logout</a></li>
+          <li class="nav-item"><a class="nav-link" aria-current="page">Hello {{user.username}}</a></li>
+          {% else %}
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'login' %}">Login</a></li>
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'signup' %}">Signup</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="collapse" id="collapseExample">
+  {% for i in pro_meetings %}
+    <div class="card card-body details">
+      <strong>as pro:</strong>
+      <p>subject: {{i.offer.title}} at: {{i.meeting_time}}</p>
+      <div class="link1">
+        <a class="btn btn-warning" href="http://127.0.0.1:8000/video_chat/{{i.id}}/" style="margin-right: 4px;">To Meeting</a>
+        <a class="btn btn-warning" href="{% url 'profile' i.offer.offer_maker.id %}">{{i.offer.offer_maker}} profile</a>
+      </div>
+    </div>
+  {% endfor %}
+  {% for i in users_meetings %}
+    <div class="card card-body details">
+      <strong>as user</strong>
+      <p>subject: {{i.offer.title}} at: {{i.meeting_time}}</p>
+      <div class="link1">
+        <a class="btn btn-warning" href="http://127.0.0.1:8000/video_chat/{{i.id}}/" style="margin-right: 4px;">To Meeting</a>
+        <a class="btn btn-warning" href="{% url 'profile' i.pro.id %}">{{i.pro}} profile</a>
+      </div>
+      <div class="buttons">
+        <a class="btn btn-primary" href="{% url 'edit_meeting' i.id %}">Edit meeting date</a>
+        <a class="btn btn-danger" href="{% url 'delete_meeting' i.id %}">Delete meeting</a>
+      </div>
+    </div>
+  {% endfor %}
+</div>

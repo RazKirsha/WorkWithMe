@@ -1,0 +1,44 @@
+{% extends 'partials/base.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block content %}
+  <h1>My meetings</h1>
+
+<hr>
+  <h2>Users</h2>
+  {% for i in users_meetings %}
+    <h5>date: {{i.meeting_date}}</h5>
+    <h5>time: {{i.meeting_time}}</h5>
+    <h5>offer maker: {{i.offer.offer_maker}}</h5>
+    <h5>pro:{{i.pro}}</h5>
+    <h5>title:{{i.offer.title}}</h5>
+    <h5>link:<a href="{{i.google_meet}}">Meet</a></h5>
+    <hr>
+  {% empty%}
+    <br>
+    <h3>No appointments yet..</h3>
+  {% endfor %}
+
+  {% if user.profile.is_pro %}
+    <h2>Pros</h2>
+    {% for i in pro_meetings %}
+      <h5>date: {{i.meeting_date}}</h5>
+      <h5>time: {{i.meeting_time}}</h5>
+      <h5>offer maker: {{i.offer.offer_maker}}</h5>
+      <h5>pro:{{i.pro}}</h5>
+      <h5>title:{{i.offer.title}}</h5>
+      <h5>link:<a href="{{i.google_meet}}">Meet</a></h5>
+      <hr>
+    {% empty%}
+      <br>
+      <h3>No appointments yet..</h3>
+    {% endfor %}
+  {% endif %}
+
+{% endblock %}
